@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 RRK YouTube Thumbnail Downloader - Professional & Free</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Watermark -->
+    <div class="watermark">
+        Made by Ravi Ranjan Kashyap
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="rrk-logo">
+                <div class="rrk-text">RRK</div>
+            </div>
+            <h1 class="title">YouTube Thumbnail Downloader</h1>
+            <p class="subtitle">Professional & Free - Download High-Quality Thumbnails</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <!-- URL Input Section -->
+            <div class="input-section">
+                <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: #ffffff;">
+                    <i class="fas fa-link" style="color: #ff0000; margin-right: 10px;"></i>
+                    Enter YouTube Video URL
+                </h2>
+                <div class="input-group">
+                    <input type="url" id="urlInput" class="url-input" 
+                           placeholder="https://www.youtube.com/watch?v=..." 
+                           value="https://www.youtube.com/watch?v=eILUmCJhl64">
+                    <button class="clear-btn" onclick="clearUrl()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+                        <i class="fas fa-check" style="color: #28a745; margin-right: 5px;"></i>YouTube.com
+                    </span>
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+                        <i class="fas fa-check" style="color: #28a745; margin-right: 5px;"></i>Youtu.be
+                    </span>
+                    <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+                        <i class="fas fa-check" style="color: #28a745; margin-right: 5px;"></i>Shorts
+                    </span>
+                </div>
+            </div>
+
+            <!-- Quality Selection -->
+            <div class="quality-section">
+                <h3 class="quality-title">
+                    <i class="fas fa-image" style="color: #ff0000; margin-right: 10px;"></i>
+                    Choose Quality
+                </h3>
+                <div class="quality-grid">
+                    <div class="quality-card" onclick="selectQuality('maxresdefault')" data-quality="maxresdefault">
+                        <div class="quality-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="quality-name">Ultra HD</div>
+                        <div class="quality-desc">1280×720 pixels - Best Quality</div>
+                    </div>
+                    <div class="quality-card" onclick="selectQuality('hqdefault')" data-quality="hqdefault">
+                        <div class="quality-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="quality-name">High Quality</div>
+                        <div class="quality-desc">480×360 pixels - Good Quality</div>
+                    </div>
+                    <div class="quality-card" onclick="selectQuality('mqdefault')" data-quality="mqdefault">
+                        <div class="quality-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="quality-name">Medium Quality</div>
+                        <div class="quality-desc">320×180 pixels - Standard</div>
+                    </div>
+                    <div class="quality-card" onclick="selectQuality('webp')" data-quality="webp">
+                        <div class="quality-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="quality-name">WebP Format</div>
+                        <div class="quality-desc">Optimized - Smaller Size</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="downloadThumbnail()">
+                    <i class="fas fa-download"></i>
+                    Download Thumbnail
+                </button>
+                <button class="btn btn-secondary" onclick="previewThumbnail()">
+                    <i class="fas fa-eye"></i>
+                    Preview
+                </button>
+                <button class="btn btn-success" onclick="downloadAllQualities()">
+                    <i class="fas fa-layer-group"></i>
+                    Download All
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading">
+                <div class="loading-spinner"></div>
+                <p style="color: #ffffff; font-size: 1.1rem;">Processing your request...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="error">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ff0000; margin-bottom: 20px;"></i>
+                <p id="errorMessage" style="color: #ffffff; font-size: 1.1rem;">An error occurred</p>
+            </div>
+
+            <!-- Thumbnail Display -->
+            <div id="thumbnailSection" class="thumbnail-section" style="display: none;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: #ffffff;">
+                    <i class="fas fa-eye" style="color: #28a745; margin-right: 10px;"></i>
+                    Preview & Download
+                </h3>
+                <div class="thumbnail-container">
+                    <img id="thumbnailImg" class="thumbnail-img" alt="YouTube Thumbnail">
+                    <div class="quality-badge" id="qualityBadge">Ultra HD</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="downloadCurrentThumbnail()">
+                        <i class="fas fa-download"></i>
+                        Download This Quality
+                    </button>
+                    <button class="btn btn-secondary" onclick="copyImageUrl()">
+                        <i class="fas fa-link"></i>
+                        Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: #ffffff;">
+                <i class="fas fa-star" style="color: #ff0000; margin-right: 10px;"></i>
+                Features
+            </h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="feature-title">Lightning Fast</div>
+                    <div class="feature-desc">Instant thumbnail generation</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">100% Safe</div>
+                    <div class="feature-desc">No registration required</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="feature-title">Completely Free</div>
+                    <div class="feature-desc">No hidden charges</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-title">Mobile Friendly</div>
+                    <div class="feature-desc">Works on all devices</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <h3 class="history-title">
+                <i class="fas fa-history" style="color: #ff0000; margin-right: 10px;"></i>
+                Recent Downloads
+            </h3>
+            <div class="history-list" id="historyList">
+                <!-- History items will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
